@@ -16,7 +16,13 @@ client.connect()
 async function run (){
     try{
         await client.connect();
-        const partsCollection = client.db('moto_gears').collection('parts')
+        const partsCollection = client.db('moto_gears').collection('parts');
+        app.get('/parts', async(req, res)=>{
+                        const query = {};
+                        const cursor = partsCollection.find(query)
+                        const services = await cursor.toArray();
+                        res.send(services)
+                    });
     }
 
     finally{
