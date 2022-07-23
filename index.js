@@ -30,7 +30,35 @@ async function run (){
             const query = {_id: ObjectId(id)};
             const item = await partsCollection.findOne(query);
             res.send(item)
-          });           
+          });  
+          
+          app.put('/decreaseQty/:id', async(req, res) =>{
+            const id = req.params.id;
+            const qty = req.body.newQuantity;
+            const filter = {_id: ObjectId(id)};
+            const options = { upsert: true};
+            const updatedDoc = {
+                $set: {
+                      qty: qty
+                }
+            }
+            const result = await partsCollection.updateOne(filter, updatedDoc, options);
+            res.send(result)
+          });
+
+          app.put('/increaseQty/:id', async(req, res) =>{
+            const id = req.params.id;
+            const qty = req.body.newQuantity;
+            const filter = {_id: ObjectId(id)};
+            const options = { upsert: true};
+            const updatedDoc = {
+                $set: {
+                      qty: qty
+                }
+            }
+            const result = await partsCollection.updateOne(filter, updatedDoc, options);
+            res.send(result)
+          });
     }
 
     finally{
