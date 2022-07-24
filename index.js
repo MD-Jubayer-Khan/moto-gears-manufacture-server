@@ -61,6 +61,7 @@ async function run (){
             res.send(item)
           });  
 
+
           app.get('/user', verifyJWT, async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
@@ -122,6 +123,19 @@ async function run (){
             const result = await orderCollection.insertOne(order);
             res.send({success: true, result})
         });
+
+        app.get('/order', verifyJWT, async (req, res) => {
+          const user = req.query.user;
+          const decodedEmail = req.decoded.email;
+          if (user === decodedEmail) {
+            const query = { user: user };
+            const order = await orderCollection.find(query).toArray();
+            return res.send(order);
+          }
+          else {
+            return res.status(403).send({ message: 'forbidden access' });
+          }
+        })
     }
 
     finally{
