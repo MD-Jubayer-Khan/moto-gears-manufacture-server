@@ -34,6 +34,7 @@ async function run (){
         await client.connect();
         const partsCollection = client.db('moto_gears').collection('parts');
         const userCollection = client.db('moto_gears').collection('users');
+        const orderCollection = client.db('moto_gears').collection('orders')
 
         app.get('/parts', async(req, res)=>{
                         const query = {};
@@ -88,7 +89,13 @@ async function run (){
             const result = await userCollection.updateOne(filter, updateDoc, options);
             const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5h' })
             res.send({ result, token });
-          })
+          });
+
+          app.post('/order', async(req, res) =>{
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send({success: true, result})
+        });
     }
 
     finally{
