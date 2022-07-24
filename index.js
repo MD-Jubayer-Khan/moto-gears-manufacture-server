@@ -36,19 +36,24 @@ async function run (){
         const userCollection = client.db('moto_gears').collection('users');
         const orderCollection = client.db('moto_gears').collection('orders')
 
-        app.get('/parts', async(req, res)=>{
+         app.get('/parts', async(req, res)=>{
                         const query = {};
                         const cursor = partsCollection.find(query)
                         const services = await cursor.toArray();
                         res.send(services)
                     });
 
-        app.get('/parts/:id', async(req, res) => {
+         app.get('/parts/:id', async(req, res) => {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
             const item = await partsCollection.findOne(query);
             res.send(item)
           });  
+
+          app.get('/user', async (req, res) => {
+            const users = await userCollection.find().toArray();
+            res.send(users);
+          });
           
           app.put('/decreaseQty/:id', async(req, res) =>{
             const id = req.params.id;
