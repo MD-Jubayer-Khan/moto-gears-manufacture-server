@@ -45,14 +45,22 @@ async function run (){
           else{
             res.status(403).send({message: 'forbidden'});
           }
-        }
+        };
+
+        app.post('/parts', async(req, res) =>{
+          const newParts = req.body;
+          const result = await partsCollection.insertOne(newParts);
+          res.send({success: true, result})
+
+        });
 
          app.get('/parts', async(req, res)=>{
-                        const query = {};
-                        const cursor = partsCollection.find(query)
-                        const services = await cursor.toArray();
-                        res.send(services)
-                    });
+              const query = {};
+              const cursor = partsCollection.find(query)
+              const services = await cursor.toArray();
+              res.send(services)
+
+             });
 
          app.get('/parts/:id', async(req, res) => {
             const id = req.params.id;
