@@ -184,6 +184,6 @@ app.get('/', (req, res)=> {
     res.send('Hello from moto gears')
 });
 
-app.listen(port, ()=>  {
-    console.log(`moto gears app listening port ${port}`);
-})
+app.listen(port, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
