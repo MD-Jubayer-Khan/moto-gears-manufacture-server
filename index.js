@@ -81,6 +81,13 @@ async function run (){
             const users = await userCollection.find().toArray();
             res.send(users);
           });
+
+          app.get('/admin/:email', async(req, res) =>{
+            const email = req.params.email;
+            const user = await userCollection.findOne({email: email});
+            const isAdmin = user.role === 'admin';
+            res.send({admin: isAdmin})
+          })
           
           app.put('/decreaseQty/:id', async(req, res) =>{
             const id = req.params.id;
