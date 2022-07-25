@@ -35,6 +35,7 @@ async function run (){
         const partsCollection = client.db('moto_gears').collection('parts');
         const userCollection = client.db('moto_gears').collection('users');
         const orderCollection = client.db('moto_gears').collection('orders')
+        const reviewCollection = client.db('moto_gears').collection('reviews')
 
         const verifyAdmin = async(req, res, next) => {
           const requester = req.decoded.email;
@@ -50,6 +51,13 @@ async function run (){
         app.post('/parts', async(req, res) =>{
           const newParts = req.body;
           const result = await partsCollection.insertOne(newParts);
+          res.send({success: true, result})
+
+        });
+
+        app.post('/review', async(req, res) =>{
+          const review = req.body;
+          const result = await reviewCollection.insertOne(review);
           res.send({success: true, result})
 
         });
