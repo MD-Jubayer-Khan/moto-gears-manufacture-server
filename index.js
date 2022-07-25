@@ -62,6 +62,11 @@ async function run (){
 
         });
 
+        app.get('/review', async (req, res) => {
+          const review = await  reviewCollection.find().toArray();
+          res.send(review);
+        });
+
          app.get('/parts', async(req, res)=>{
               const query = {};
               const cursor = partsCollection.find(query)
