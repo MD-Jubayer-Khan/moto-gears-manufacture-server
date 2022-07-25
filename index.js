@@ -69,6 +69,13 @@ async function run (){
             res.send(item)
           });  
 
+          app.delete('/parts/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await partsCollection.deleteOne(query);
+            res.send(result);
+        });
+
 
           app.get('/user', verifyJWT, async (req, res) => {
             const users = await userCollection.find().toArray();
@@ -143,7 +150,8 @@ async function run (){
           else {
             return res.status(403).send({ message: 'forbidden access' });
           }
-        })
+        });
+        
     }
 
     finally{
