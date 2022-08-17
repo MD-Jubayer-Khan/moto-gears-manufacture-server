@@ -139,6 +139,21 @@ async function run (){
             res.send(result)
           });
 
+          app.put('/restockQty/:id', async(req, res) =>{
+            const id = req.params.id;
+            const qty = req.body.newQuantity;
+            const filter = {_id: ObjectId(id)};
+            const options = { upsert: true};
+            const updatedDoc = {
+                $set: {
+                      availableQty: qty
+                }
+            }
+            const result = await partsCollection.updateOne(filter, updatedDoc, options);
+            res.send(result)
+          });
+
+
           app.put('/user/admin/:email', verifyJWT,verifyAdmin, async (req, res) => {
             const email = req.params.email;
               const filter = { email: email };
