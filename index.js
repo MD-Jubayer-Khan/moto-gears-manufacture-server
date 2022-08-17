@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(express.json());
-app.use(cors({credentials: true, origin: "https://moto-gears-cf6ba.web.app"}));
+app.use(cors({credentials: true, origin: ["https://moto-gears-cf6ba.web.app", "http://localhost:3000"]}));
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.my6ni.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
